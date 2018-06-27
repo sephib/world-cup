@@ -5,10 +5,10 @@ data_dir ='.'
 
 
 def read_squad_to_df(l:list):
-    print('process Squad')
+    # print('process Squad')
     df_all = pd.DataFrame()
     for team in l:
-        print(team)
+        # print(team)
         df = pd.read_fwf(team, skiprows=4,
                          names=['num_in_country', 'position', 'name', 'sepe', 'num_in_group', 'team'])
         df['country'] = team.parts[-1].split('-')[1].split('.')[0]
@@ -36,6 +36,9 @@ def main():
                     df = pd.DataFrame()
             else:
                 pass
+    #Clean dataframe
+    mask = df_all.num_in_country.isnull()
+    df_all = df_all[~mask]
     print(f'len {df_all.shape}')
     print(f'{df_all.info()}')
     print(f'{df_all.head()}')
